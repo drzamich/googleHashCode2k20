@@ -10,10 +10,10 @@ letters.forEach(letter => {
     const books = lines[1].split(' ').map((score, index) => ({ id: index, score}))
     let libraries = [];
     for(let i = 0; i < numberOfLibraries; i++) {
-      const totalBooks = lines[i+2].split(' ')[0];
-      const signupDuration = lines[i+2].split(' ')[1];
-      const shipCapacity = lines[i+2].split(' ')[2];
-      const bookIds = lines[i+3].split(' ');
+      const totalBooks = lines[2*i+2].split(' ')[0];
+      const signupDuration = lines[2*i+2].split(' ')[1];
+      const shipCapacity = lines[2*i+2].split(' ')[2];
+      const bookIds = lines[2*i+3].split(' ');
       libraries.push({ id: i, totalBooks, signupDuration, shipCapacity, bookIds });
     }
 

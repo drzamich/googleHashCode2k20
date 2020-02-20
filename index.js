@@ -1,6 +1,6 @@
 const fs = require('fs');
-const letters = ['a', 'b', 'c', 'd', 'e', 'f']
-// const letters = ['a'];
+// const letters = ['a', 'b', 'c', 'd', 'e', 'f']
+const letters = ['d'];
 
 letters.forEach(letter => {
 
@@ -47,6 +47,8 @@ letters.forEach(letter => {
           maxScore = library.possibleScore;
         }
       });
+
+      if(bestLibrary === undefined) return;
 
       librariesToLoad.push(bestLibrary);
       if(newLibraries.length > 1) {

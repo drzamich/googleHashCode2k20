@@ -31,11 +31,18 @@ letters.forEach(letter => {
       newLibraries.forEach(library => {
         library.bookIds = library.bookIds.filter(id => !currentBest.booksToShip.includes(id))
         library.possibleShipments = Math.min((daysForScanning - library.signupDuration)*library.shipCapacity, library.bookIds.length);
+        if(library.possibleShipments < 1) {
+          return;
+        }
         library.booksToShip = library.bookIds.slice(0, library.possibleShipments);
         let possibleScore = 0;
-        library.booksToShip.forEach(id => {
+        if(letter !== 'd' ) {
+          library.booksToShip.forEach(id => {
           possibleScore += Number(books[id].score);
         })
+        } else {
+          possibleScore = library.booksToShip.length;
+        }
         library.possibleScore = possibleScore;
       });
 
@@ -48,12 +55,20 @@ letters.forEach(letter => {
         }
       });
 
-      if(bestLibrary === undefined) return;
+      return [bestLibrary, newLibraries]
+    }
 
-      librariesToLoad.push(bestLibrary);
-      if(newLibraries.length > 1) {
-        chooseBestLibrary(bestLibrary, newLibraries);
-      }
+    let bestLibrary = {
+      daysForScanning: 0,
+      booksToShip: [],
+      signupDuration: 0,
+    };
+    let newLibraries = libraries;
+    for(let i = 0; i < libraries.length; i++) {
+      const [lib, libs] = chooseBestLibrary(bestLibrary, newLibraries);
+      bestLibrary = lib;
+      newLibraries = libs;
+      librariesToLoad.push(bestLibrary)
     }
 
     chooseBestLibrary({
@@ -62,7 +77,6 @@ letters.forEach(letter => {
       signupDuration: 0,
     }, libraries);
 
-    console.log(librariesToLoad);
 
     let output = [librariesToLoad.length];
     librariesToLoad.forEach(library => {
@@ -73,10 +87,7 @@ letters.forEach(letter => {
     })
 
     const outputStr = output.join('\n');
-    console.log(outputStr);
-
     fs.writeFileSync(`output/${letter}.txt`, outputStr);
-
   });
 });
 

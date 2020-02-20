@@ -1,6 +1,6 @@
 const fs = require('fs');
-// const letters = ['a', 'b', 'c', 'd', 'e', 'f']
-const letters = ['ab'];
+const letters = ['a', 'b', 'c', 'd', 'e', 'f']
+// const letters = ['a'];
 
 letters.forEach(letter => {
 
@@ -62,12 +62,19 @@ letters.forEach(letter => {
 
     console.log(librariesToLoad);
 
+    let output = [librariesToLoad.length];
+    librariesToLoad.forEach(library => {
+      const firstLline = `${library.id} ${library.booksToShip.length}`
+      const secondLine = library.booksToShip.join(' ');
+      output.push(firstLline);
+      output.push(secondLine)
+    })
 
-    // console.log(bestLibrary);
-    // console.log('books: ');
-    // console.log(books);
-    // console.log('libraries: ');
-    // console.log(libraries);
+    const outputStr = output.join('\n');
+    console.log(outputStr);
+
+    fs.writeFileSync(`output/${letter}.txt`, outputStr);
+
   });
 });
 

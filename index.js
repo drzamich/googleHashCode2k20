@@ -1,6 +1,5 @@
 const fs = require('fs');
-// const letters = ['a', 'b', 'c', 'd', 'e', 'f']
-const letters = ['d'];
+const letters = ['a', 'b', 'c', 'd', 'e', 'f']
 
 letters.forEach(letter => {
 
@@ -88,6 +87,7 @@ letters.forEach(letter => {
 
     const outputStr = output.join('\n');
     fs.writeFileSync(`output/${letter}.txt`, outputStr);
+    console.log(`${letter} saved.`);
   });
 });
 
